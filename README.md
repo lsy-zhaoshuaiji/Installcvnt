@@ -1,6 +1,11 @@
 # Installcvnt
 A script to install cvnt
+
+
+
 意义
+
+
           各位矿工在参与CVNT项目时为了到达一机多挖的效果，选择了虚拟机Vmware等方式。但Vm占用资源高且安装效率慢。而docker则可以很好的解决这个问题。现为大家讲解如何以最优雅的方式实现一机多挖。
 
 一、必要配置以及准备（若有python3，则跳过此步骤）
