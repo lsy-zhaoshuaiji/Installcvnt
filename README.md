@@ -4,75 +4,116 @@ A script to install cvnt
 
 
 意义
-
-
-          各位矿工在参与CVNT项目时为了到达一机多挖的效果，选择了虚拟机Vmware等方式。但Vm占用资源高且安装效率慢。而docker则可以很好的解决这个问题。现为大家讲解如何以最优雅的方式实现一机多挖。
+          各位矿工在参与CVNT项目时为了到达一机多挖的效果，选择了虚拟机Vmware等方式。但Vm占用资源高且安装效率慢。而docker则可以很好的解决这个问题。现为大家讲解，如何以最优雅的方式实现一机多挖。
 
 一、必要配置以及准备（若有python3，则跳过此步骤）
            我们是基于python3开发的脚本，所以在运行一键安装CVNT脚本时，必须确保本机有装有python3。
 
 1.1判断是否有python3
 
-     请在服务器端打开终端输入python3 ,若出现界面，则代表您已经安装过python3，可跳过配置阶段。
+     请在服务器端打开终端输入python3 ,若出现python3.x的字样，则代表您已经安装过python3，可跳过配置阶段。
+
 
 1.2安装python3
 
-     1.2.1请复制链接并打开浏览器，点击download.zip（如图）：
-
-https://github.com/lsy-zhaoshuaiji/Installcvnt.git
+     1.2.1请复制链接并打开浏览器，点击download.zip（如图）：https://github.com/lsy-zhaoshuaiji/Installcvnt.git
 
 
 1.2.2  解压文件
 
-     解压后您将会看到两个文件installCvnt.py和python.sh，请将这两个文件复制到您的目录中，并在此目录中打开命令终端。
+          解压后您将会看到两个文件installCvnt.py和python.sh，请将这两个文件复制到您的目录中，并在此目录中打开命令终端。         
+1.2.3切换管理员权限，（切换root）
 
-  1.2.3切换管理员权限，（切换root）
+          请输入 su root   点击回撤，并输入密码 再点击回撤
 
-   请输入 su root   点击回撤，并输入密码 再点击回撤
-
-    ps（小编抱怨一句）:不要问我为什么输入密码不显示，如果这个你都不懂 ，你自己请技术去安装。这类问题，也不要在群里问我，问我，我也不想说。
+           ps（小编抱怨一句）:不要问我为什么输入密码不显示，如果这个你都不懂 ，你自己请技术去安装。这类问题，也不要在群里问我，问我，我也不想说。
 
 1.2.3安装python3.6
 
-请在终端输入：
+         请在终端输入：
 
-sh python.sh
+          sh python.sh
 
-脚本会自动帮您安装python3，这个过程是编译安装，可能需要5-10分钟，机器会一直刷屏。请您耐心等待
+         脚本会自动帮您安装python3，这个过程是编译安装，可能需要5-10分钟，机器会一直刷屏。请您耐心等待
 
 1.2.4检验是否安装成功
 
-     再次输入python3  若出现如图1.1所示就代表成功安装python3.
-
-     ps：出现如图1.1所述就代表成功了，其他的显示不重要。
+       再次输入python3  若出现python3的字样就代表成功安装python3.
 
 二、一键安装多台Cvnt（重点来了哦）
 2.1下载脚本文件
 
-请复制链接并打开浏览器，点击download.zip（如图）：
+      请复制链接并打开浏览器，点击download.zip（如图）：
 
-https://github.com/lsy-zhaoshuaiji/Installcvnt.git
-
+      https://github.com/lsy-zhaoshuaiji/Installcvnt.git
 
 2.2解压文件
 
      解压后您将会看到两个文件installCvnt.py和python.sh，请将这两个文件复制到您的目录中，并在此目录中打开命令终端。
 
-  1.2.3切换管理员权限，（切换root）
+     1.2.3切换管理员权限，（切换root）
 
-   请输入 su root   点击回撤，并输入密码 再点击回撤
+     请输入 su root   点击回撤，并输入密码 再点击回撤
 
-2.3执行安装程序脚本（重点）
+2.3挂载并获取硬盘挂载位置方法（若您已经挂载过，可跳过此步骤）：
+
+请输入以下命令：
+
+fdisk -l  
+比如5.5T的硬盘，/dev/sda  这就是我要挂载的硬盘名，再输入：
+
+mkdir /home/data1
+
+mkfs.ext4 /dev/sda
+mount /dev/sda /home/data1 
+
+
+
+检查硬盘大小,请输入下面的命令，若出现了正确的大小，则代表挂载完成
+
+df -h --total
+其中/dev/sda为您的硬盘，请根据自己的硬盘名称填写
+
+其中/home/data1为硬盘挂载点，也就是下文您mount_dev参数。请记住这个参数
+
+开机自动挂载：（可跳过此步骤，请点击下面地址）
+
+自动挂载https://blog.csdn.net/up_com/article/details/51264872
+
+2.4执行安装程序脚本（重点）
+
+
 
 1.在终端输入
 
-python3 installCvnt.py docker_num(虚拟节点的个数)   cvnt_uid（您人人影视的uid）
+python3 installCvnt.py docker_num(虚拟节点的个数)   cvnt_uid（您人人影视的uid） mount_dev(外接硬盘的挂载目录)
+
+新版本加入了mount_dev参数，可根据此参数让虚拟节点内部存储到硬盘上、此参数可以为空。但由于固态空间比较小，如果您需要虚拟大于20个节点时，建议您在矿机上接一块硬盘。
+
 例如：
 
-python3 installCvnt.py 5 123456
-   其中5就是虚拟5个cvnt节点  123465就是UID。请按照自己的需求修改，不改的话，你就没收益，不解释。
+python3 installCvnt.py 25 123456 /home/data2
 
-~~~代表执行过程中需要获取dockerHub的镜像，虽然我用阿里云加速了 但可以还是会等待很久，所以请您耐心等待5-10分钟（根据您的网速来决定）
+#25为虚拟25个cvnt节点
+#123456为UID值
+#/home/data2 为硬盘挂载点
+
+如果您虚拟的节点数量比较小，可以不填写mount_dev参数，让cvnt存储在固态硬盘上：
+
+例如：
+
+   
+
+python3 installCvnt.py 5 123456
+
+#5为虚拟5个cvnt节点
+#123456为UID值
+
+
+
+请按照自己的需求修改参数值，不改的话，您就没收益了，。
+
+~~~代码执行过程中需要获取dockerHub的镜像，虽然我用阿里云加速了 但可以还是会等待很久，所以请您耐心等待5-10分钟（根据您的网速来决定）
 
 2.4在web端开启挖矿（后续我会将基于selenium自动化一键开启挖矿的程序开源 ，目前您还是手动点击开启挖矿）
 
@@ -106,13 +147,13 @@ python3 installCvnt.py 5 123456
 逻辑上我定义了这几个方法，如图：
 
 
+
 其中：
 
 # -*- coding:utf-8 -*-
 
 
 #这个是让服务器能识别UTF-8编码的
-
 1.检测安装docker
 
 这个逻辑很简单：
@@ -154,7 +195,6 @@ def install_docker():
         print("成功安装docker，正在安装CVNT------------>")
     else:
         print("您已经安装过docker了，无须安装，正在安装CVNT------------>")
-
 2.pull镜像
 
 这个我要重点讲一下封装的docker镜像，很多人用docker采集不到公网ip就是因为这一步骤：
@@ -190,7 +230,6 @@ def pull_docker():
     print("成功修改docker源......正在获取镜像.....请耐心等待几分钟......")
     output=subprocess.getoutput("docker pull registry.cn-hangzhou.aliyuncs.com/cs_work/cvnt_work:v1.0")
     print("容器Images为：%s"%output)
-
 3.运行容器并修改容器配置文件
 
 代码逻辑为：
@@ -229,7 +268,6 @@ def install_cvnt(docker_num,cvnt_uid):
         port_web += 1
         name_num += 1
     return port_list
-
 4.随机生成mac地址
 
 这部分安装mac地址的要求来生成即可，很简单，用随机数。
@@ -242,8 +280,7 @@ def randomMAC():
            random.randint(0x00, 0xff),
            random.randint(0x00, 0xff)]
     return ':'.join(map(lambda x: "%02x" % x, mac))
-
-大概就是这些，其实本事就是用python、shell与docker交互并不困难。难点在于封装一个可用的docker容器。
+大概就是这些，其实程序本身只是用python、shell与docker交互并不困难。难点在于封装一个可用的docker容器。
 
 当然在大容器管理下，我还是推荐用k8s集群化管理。
 
