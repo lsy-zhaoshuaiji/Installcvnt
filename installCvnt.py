@@ -60,10 +60,13 @@ def randomMAC():
            random.randint(0x00, 0xff)]
     return ':'.join(map(lambda x: "%02x" % x, mac))
 
-def install_cvnt(docker_num,cvnt_uid):
+def install_cvnt(docker_num,cvnt_uid,mount_dev):
     name_num = 1
     port_web = 60001
     port_list=[]
+    dokcer_mount=' -v %s:%s'%(mount_dev,mount_dev)
+    if mount_dev=='':
+        dokcer_mount=''
     for i in range(docker_num):
         mac=randomMAC()
         container_name = "cvnt{}".format(name_num)
@@ -71,11 +74,11 @@ def install_cvnt(docker_num,cvnt_uid):
         b = port_web + 2
         c = port_web + 3
         port_list.append(port_web)
-        run_container = "docker run -d -it --name {} " \
+        run_container = "docker run -d -it --name {}{}" \
                         " --net bridge --mac-address {} -p " \
                         "{}:10000 -p {}:59606 -p {}:59608 -p {}:59843 " \
                         "-h {} " \
-                        "registry.cn-hangzhou.aliyuncs.com/cs_work/cvnt_work:v1.0 ".format(container_name, mac, port_web,
+                        "registry.cn-hangzhou.aliyuncs.com/cs_work/cvnt_work:v1.0 ".format(container_name,dokcer_mount, mac, port_web,
                                                                                           a, b, c, container_name)
         container_Id = subprocess.getoutput(run_container)
         start_cvnt = r'docker exec %s bash -c "cd /usr/local/yyets_20190829/yyets_20190829;cd conf;' \
@@ -99,6 +102,10 @@ def Check_input():
         print('请输入大于0的整数,如python3 installCvnt_open.py 3 123456               解释：其中3为虚拟个数,123456为UID')
         input_check='error'
     try:
+        mount_dev = sys.argv[3]
+    except Exception as fe:
+        mount_dev=''
+    try:
         docker_num=int(docker_num)
         cvnt_uid=int(cvnt_uid)
     except Exception as e:
@@ -107,16 +114,16 @@ def Check_input():
     if int(docker_num) == 0 or int(cvnt_uid)==0:
         input_check = "请输入大于0的整数,如python3 installCvnt_open.py 3 123456      解释：其中3为虚拟个数,123456为UID"
         input_check = 'error'
-    return input_check,docker_num,cvnt_uid
+    return input_check,docker_num,cvnt_uid,mount_dev
 
 def start_program():
-    status,docker_num,cvnt_uid=Check_input()
+    status,docker_num,cvnt_uid,mount_dev=Check_input()
     if status=='error':
         return
     print("输入正确----")
     install_docker()
     pull_docker()
-    port_list=install_cvnt(docker_num,cvnt_uid)
+    port_list=install_cvnt(docker_num,cvnt_uid,mount_dev)
     return port_list
 
 port_list=start_program()
