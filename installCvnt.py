@@ -9,7 +9,7 @@ def install_docker():
     :return:
     '''
     output = subprocess.getoutput('which docker')
-    if len(output) < 2:
+    if len(output) < 2 or 'no docker' in output:
         print('正在安装docker中.......')
         output = subprocess.getoutput('lsb_release -a')
         if 'CentOS' in output:
@@ -49,6 +49,8 @@ def pull_docker():
     subprocess.getoutput(Change_docker_Source)
     print("成功修改docker源......正在获取镜像.....请耐心等待几分钟......")
     output=subprocess.getoutput("docker pull registry.cn-hangzhou.aliyuncs.com/cs_work/cvnt_work:v1.0")
+    print("正在拉取镜像，请勿动.........勿动...........")
+    print("正在拉取镜像，请勿动.........勿动...........//")
     print("容器Images为：%s"%output)
 
 def randomMAC():
