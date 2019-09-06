@@ -64,10 +64,14 @@ def install_cvnt(docker_num,cvnt_uid,mount_dev):
     name_num = 1
     port_web = 60001
     port_list=[]
-    dokcer_mount=' -v %s:%s'%(mount_dev,mount_dev)
-    if mount_dev=='':
-        dokcer_mount=''
     for i in range(docker_num):
+        if mount_dev == '':
+            dokcer_mount = ''
+        else:
+            tmp_name = 'cvnt' + str(name_num)
+            dir_name=mount_dev+'/'+tmp_name
+            subprocess.getoutput(r'mkdir -p %s'%dir_name)
+            dokcer_mount = r' -v %s:%s' % (dir_name, dir_name)
         mac=randomMAC()
         container_name = "cvnt{}".format(name_num)
         a = port_web + 1
@@ -80,6 +84,7 @@ def install_cvnt(docker_num,cvnt_uid,mount_dev):
                         "-h {} " \
                         "registry.cn-hangzhou.aliyuncs.com/cs_work/cvnt_work:v1.0 ".format(container_name,dokcer_mount, mac, port_web,
                                                                                           a, b, c, container_name)
+        print(run_container)
         container_Id = subprocess.getoutput(run_container)
         start_cvnt = r'docker exec %s bash -c "cd /usr/local/yyets_20190829/yyets_20190829;cd conf;' \
                      r"echo -e '#本地账户信息\nuid=%d' > " \
