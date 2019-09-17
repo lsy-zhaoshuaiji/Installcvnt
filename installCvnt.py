@@ -73,7 +73,7 @@ def install_cvnt(docker_num,cvnt_uid,mount_dev):
             subprocess.getoutput(r'mkdir -p %s'%dir_name)
             dokcer_mount = r' -v %s:%s' % (dir_name, dir_name)
         mac=randomMAC()
-        container_name = "cvnt{}".format(name_num)
+        container_name = "cvnt{}_{}_{}".format(name_num, port_web, cvnt_uid)
         a = port_web + 1
         b = port_web + 2
         c = port_web + 3
