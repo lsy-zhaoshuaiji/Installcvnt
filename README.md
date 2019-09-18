@@ -32,9 +32,6 @@ A script to install cvnt
 1.2.3在矿机端执行 python3 restart_cvnt.py
 
 执行后 掉线的节点会自动恢复，过一个小时，后台便会恢复状态。
-————————————————
-版权声明：本文为CSDN博主「Laughing_G」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/Laughing_G/article/details/100269974
 
 ————————————————----------------
 
