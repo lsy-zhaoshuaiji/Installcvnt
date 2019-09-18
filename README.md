@@ -12,13 +12,29 @@ A script to install cvnt
 
 ————————————————---------------
           
-（更新：1.机器重启后，自动恢复掉线的CVNT节点）
+功能更新：（可忽略）
+一.自动化点击web端开启挖矿程序：
+（前提：您必须已经安装谷歌浏览器，其他浏览器暂时不支持）
 
-1.2.1 下载restart_cvnt.py文件：
+1.1请复制链接并打开浏览器，点击download.zip：https://github.com/lsy-zhaoshuaiji/Installcvnt.git并下载autoclick.rar文件，如图：
 
-1.2.2在矿机端执行 python3 restart_cvnt.py
+
+
+1.2解压autoclick程序,并运行autoclick.exe
+
+1.2.3按照要求填写信息，系统将自动开启挖矿
+
+二.机器重启后，自动恢复掉线的CVNT节点
+1.2.1请复制链接并打开浏览器，点击download.zip：https://github.com/lsy-zhaoshuaiji/Installcvnt.git
+
+1.2.2 下载restart_cvnt.py文件：
+
+1.2.3在矿机端执行 python3 restart_cvnt.py
 
 执行后 掉线的节点会自动恢复，过一个小时，后台便会恢复状态。
+————————————————
+版权声明：本文为CSDN博主「Laughing_G」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/Laughing_G/article/details/100269974
 
 ————————————————----------------
 
