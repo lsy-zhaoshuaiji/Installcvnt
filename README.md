@@ -2,7 +2,7 @@
 A script to install cvnt
 
 
-
+（已更新）
 意义
           
           
