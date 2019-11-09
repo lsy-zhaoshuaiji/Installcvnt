@@ -1,6 +1,6 @@
 # Installcvnt
 A script to install cvnt
-
+我的微信：laughing_jk      由于各种原因，脚本下载地址暂时关闭，如果您需要脚本请添加我的微信，加我请备注出处。
 
 （已更新）
 意义
